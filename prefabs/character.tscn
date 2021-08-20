@@ -1,0 +1,57 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://char_body_quad.tres" type="QuadMesh" id=1]
+[ext_resource path="res://char_hat_flip_quad.tres" type="QuadMesh" id=2]
+[ext_resource path="res://char_hat_quad.tres" type="QuadMesh" id=3]
+[ext_resource path="res://char_face_flip_quad.tres" type="QuadMesh" id=4]
+[ext_resource path="res://char_face_quad.tres" type="QuadMesh" id=5]
+[ext_resource path="res://char_walk.tres" type="Animation" id=6]
+[ext_resource path="res://char_idle.tres" type="Animation" id=7]
+[ext_resource path="res://scripts/character.gd" type="Script" id=8]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.46743, 0.504018, 0.239489 )
+
+[node name="Character" type="KinematicBody"]
+script = ExtResource( 8 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/char_idle = ExtResource( 7 )
+anims/char_walk = ExtResource( 6 )
+anims/idle = ExtResource( 7 )
+anims/walk = ExtResource( 6 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+
+[node name="Visual" type="Spatial" parent="."]
+
+[node name="Body" type="MeshInstance" parent="Visual"]
+mesh = ExtResource( 1 )
+material/0 = null
+
+[node name="Hat" type="Spatial" parent="Visual"]
+
+[node name="MeshInstance" type="MeshInstance" parent="Visual/Hat"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.03 )
+mesh = ExtResource( 3 )
+material/0 = null
+
+[node name="MeshInstance2" type="MeshInstance" parent="Visual/Hat"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.03 )
+mesh = ExtResource( 2 )
+material/0 = null
+
+[node name="Face" type="Spatial" parent="Visual"]
+
+[node name="MeshInstance" type="MeshInstance" parent="Visual/Face"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.02 )
+mesh = ExtResource( 5 )
+material/0 = null
+
+[node name="MeshInstance2" type="MeshInstance" parent="Visual/Face"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.02 )
+mesh = ExtResource( 4 )
+material/0 = null
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
