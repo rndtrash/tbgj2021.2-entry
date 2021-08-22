@@ -20,7 +20,7 @@ func _on_BydloEvent_body_entered(body):
 	if not $"/root/global".ignored_sign:
 		bydlo.dialog_box.show_text('хорошо табличку пнул')
 		yield(get_tree().create_timer(2.0), "timeout")
-		player.dialog_box.show_text('ну спасибо')
+		player.dialog_box.show_text('ну, спасибо')
 		bydlo.translation.z -= 0.5
 		player.in_cutscene = false
 		queue_free()
