@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://prefabs/character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/camera_follow.gd" type="Script" id=2]
@@ -6,15 +6,35 @@
 [ext_resource path="res://prefabs/grass.tscn" type="PackedScene" id=4]
 [ext_resource path="res://prefabs/flowers.tscn" type="PackedScene" id=5]
 [ext_resource path="res://prefabs/tree.tscn" type="PackedScene" id=6]
+[ext_resource path="res://prefabs/direction_sign.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scripts/sign.gd" type="Script" id=8]
+[ext_resource path="res://prefabs/text_bubble.tscn" type="PackedScene" id=9]
+[ext_resource path="res://prefabs/monologue_area.tscn" type="PackedScene" id=10]
+[ext_resource path="res://prefabs/choice_area.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scripts/scene_state.gd" type="Script" id=12]
+[ext_resource path="res://prefabs/bydlo.tscn" type="PackedScene" id=13]
+[ext_resource path="res://scripts/BydloEvent.gd" type="Script" id=14]
+[ext_resource path="res://prefabs/alcoholic.tscn" type="PackedScene" id=15]
+[ext_resource path="res://prefabs/garbage.tscn" type="PackedScene" id=16]
 
-[node name="Spatial" type="Spatial"]
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.457943, 1, 1 )
 
-[node name="Character" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.526406, 0 )
+[node name="MainScene" type="Spatial" groups=[
+"root",
+]]
+script = ExtResource( 12 )
+
+[node name="Character" parent="." groups=[
+"Player",
+] instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9.86709, 0.5, 0 )
+dialog_box_path = NodePath("../TextBubble")
 
 [node name="Camera" type="Camera" parent="."]
 current = true
 script = ExtResource( 2 )
+distance = 3.5
 
 [node name="Scenery" type="Spatial" parent="."]
 
@@ -26,6 +46,12 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.494112, 0.488235, 1.07897 )
 
 [node name="Bush3" parent="Scenery" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.22132, 0.551131, 1.09358 )
+
+[node name="Bush6" parent="Scenery" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.35376, 0.551131, 0.844327 )
+
+[node name="Bush7" parent="Scenery" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.85046, 0.551131, 1.20327 )
 
 [node name="Bush4" parent="Scenery" instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.50312, 0.446505, 0.815371 )
@@ -130,13 +156,106 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.36377, 0.351682, -0.684865 
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.22903, 0.933325, -1.36146 )
 
 [node name="Tree3" parent="Scenery" instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.54521, 0.933325, 1.98124 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.54521, 0.933325, 1.24383 )
 
 [node name="Tree4" parent="Scenery" instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.81585, 0.933325, 1.98124 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.81585, 0.933325, 1.24383 )
 
 [node name="Tree5" parent="Scenery" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0177672, 0.933325, 0.387245 )
 
 [node name="Tree2" parent="Scenery" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.51351, 0.872782, -1.36146 )
+
+[node name="Garbage" parent="Scenery" instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 22.699, 0.19113, -0.389093 )
+
+[node name="Garbage2" parent="Scenery" instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 21.9463, 0.19113, -0.545007 )
+
+[node name="Garbage3" parent="Scenery" instance=ExtResource( 16 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.8612, 0.19113, 0.583564 )
+
+[node name="Interactive" type="Spatial" parent="."]
+
+[node name="ChoiceArea" parent="Interactive" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.70912, 1, 0 )
+text = "пнуть табличку или оставить в покое? (лкм - хорошее действие, пкм - плохое)"
+
+[node name="Sign" parent="Interactive" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.74352, 0.362174, -0.744604 )
+
+[node name="SignEvent" type="Spatial" parent="Interactive"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.65378, 1, 0 )
+script = ExtResource( 8 )
+
+[node name="MonologueArea" parent="Interactive" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 1, 0 )
+text = "я - зло"
+
+[node name="MonologueArea4" parent="Interactive" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.0199, 1, 0 )
+text = "а впрочем, в пизду это приключение!"
+
+[node name="MonologueArea5" parent="Interactive" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -16.5655, 1, 0 )
+text = "всё, я пошёл домой"
+
+[node name="MonologueArea1" parent="Interactive" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5891, 1, 0 )
+text = "отправился в своё злое приключение"
+
+[node name="MonologueArea2" parent="Interactive" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.51144, 1, 0 )
+text = "как же я зол"
+
+[node name="MonologueArea3" parent="Interactive" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.56705, 1, 0 )
+text = "мне срочно нужно сделать что-то злое"
+
+[node name="MonologueAreaKickedSign" parent="Interactive" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.84703, 1, 0 )
+text = "как же я хорош"
+
+[node name="MonologueAreaKickedSign2" parent="Interactive" instance=ExtResource( 10 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.81448, 1, 0 )
+text = "всмысле плох"
+
+[node name="BydloEvent" type="Area" parent="Interactive"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.4243, 0.725135, 0 )
+script = ExtResource( 14 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Interactive/BydloEvent"]
+shape = SubResource( 1 )
+
+[node name="ChoiceAreaZadacha" parent="Interactive/BydloEvent" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433366, 3.02107, 0 )
+question_panel_scene = "res://prefabs/question_panel_twoopts.tscn"
+text = "ты упал в яму. в яме пирожок и хуй. что съешь, что в жопу засунешь?"
+unlock_after_answer = false
+
+[node name="Bydlo" parent="Interactive" instance=ExtResource( 13 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7121, 0.527616, 0 )
+dialog_box_path = NodePath("../../TextBubbleBydlo")
+
+[node name="Alcoholic" parent="Interactive" instance=ExtResource( 15 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5363, 0.53015, 0 )
+dialog_box_path = NodePath("../../TextBubbleAlcoholic")
+
+[node name="TextBubble" parent="." instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.46173, 1.66211, 0 )
+follow_path = NodePath("../Character")
+
+[node name="TextBubbleBydlo" parent="." instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.46173, 1.66211, 0 )
+follow_path = NodePath("../Interactive/Bydlo")
+
+[node name="TextBubbleAlcoholic" parent="." instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.46173, 1.66211, 0 )
+follow_path = NodePath("../Interactive/Alcoholic")
+
+[connection signal="bad" from="Interactive/ChoiceArea" to="Interactive/SignEvent" method="kick_and_say"]
+[connection signal="good" from="Interactive/ChoiceArea" to="Interactive/SignEvent" method="ignore_and_say"]
+[connection signal="body_entered" from="Interactive/BydloEvent" to="Interactive/BydloEvent" method="_on_BydloEvent_body_entered"]
+[connection signal="first" from="Interactive/BydloEvent/ChoiceAreaZadacha" to="Interactive/BydloEvent" method="_on_ChoiceAreaZadacha_first"]
+[connection signal="second" from="Interactive/BydloEvent/ChoiceAreaZadacha" to="Interactive/BydloEvent" method="_on_ChoiceAreaZadacha_second"]

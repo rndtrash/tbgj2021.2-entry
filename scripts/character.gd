@@ -1,6 +1,9 @@
 extends KinematicBody
 
 onready var player = $AnimationPlayer
+onready var dialog_box = get_node(dialog_box_path)
+
+export var dialog_box_path : NodePath
 
 var current_animation = ''
 var facing = 1 # 1 - right, -1 - left
@@ -16,24 +19,23 @@ func change_anim(animation):
 		player.play(animation)
 		current_animation = animation
 
-#func _input(event):
-#	pass
-
 func _process(delta):
 	if not in_cutscene:
 		if Input.is_action_pressed("character_left"):
 			facing = -1
-			move_and_collide(Vector3.RIGHT * facing * delta)
+			move_and_collide(Vector3.RIGHT * facing * delta * 5 if OS.is_debug_build() else 1)
 			change_anim('walk')
 		elif Input.is_action_pressed("character_right"):
 			facing = 1
-			move_and_collide(Vector3.RIGHT * facing * delta)
+			move_and_collide(Vector3.RIGHT * facing * delta * 5 if OS.is_debug_build() else 1)
 			change_anim('walk')
 		else:
 			change_anim('idle')
 	#######################
 	rotation_degrees.y = lerp(rotation_degrees.y, 0 if facing == 1 else 180, 10 * delta)
-	print(facing, " ", rotation_degrees.y)
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	print("finished ", anim_name)
+
+func die():
+	get_tree().change_scene("res://gameover.tscn")

@@ -1,0 +1,112 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://bydlo_body.png" type="Texture" id=1]
+[ext_resource path="res://bydlo_cig.png" type="Texture" id=2]
+[ext_resource path="res://bydlo_hat.png" type="Texture" id=3]
+[ext_resource path="res://char_face_flip_quad.tres" type="QuadMesh" id=4]
+[ext_resource path="res://char_face_quad.tres" type="QuadMesh" id=5]
+[ext_resource path="res://char_walk.tres" type="Animation" id=6]
+[ext_resource path="res://char_idle.tres" type="Animation" id=7]
+[ext_resource path="res://scripts/bydlo.gd" type="Script" id=8]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.433287, 0.492221, 0.239489 )
+
+[sub_resource type="SpatialMaterial" id=2]
+flags_transparent = true
+flags_unshaded = true
+params_cull_mode = 2
+albedo_texture = ExtResource( 1 )
+
+[sub_resource type="QuadMesh" id=3]
+material = SubResource( 2 )
+
+[sub_resource type="SpatialMaterial" id=4]
+flags_transparent = true
+flags_unshaded = true
+albedo_texture = ExtResource( 3 )
+
+[sub_resource type="QuadMesh" id=5]
+material = SubResource( 4 )
+
+[sub_resource type="SpatialMaterial" id=6]
+flags_transparent = true
+flags_unshaded = true
+params_cull_mode = 1
+albedo_texture = ExtResource( 3 )
+
+[sub_resource type="QuadMesh" id=7]
+material = SubResource( 6 )
+
+[sub_resource type="SpatialMaterial" id=8]
+flags_transparent = true
+flags_unshaded = true
+albedo_texture = ExtResource( 2 )
+
+[sub_resource type="QuadMesh" id=9]
+material = SubResource( 8 )
+
+[sub_resource type="SpatialMaterial" id=10]
+flags_transparent = true
+flags_unshaded = true
+params_cull_mode = 1
+albedo_texture = ExtResource( 2 )
+
+[sub_resource type="QuadMesh" id=11]
+material = SubResource( 10 )
+
+[node name="Bydlo" type="KinematicBody"]
+script = ExtResource( 8 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/char_idle = ExtResource( 7 )
+anims/char_walk = ExtResource( 6 )
+anims/idle = ExtResource( 7 )
+anims/walk = ExtResource( 6 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+
+[node name="Visual" type="Spatial" parent="."]
+
+[node name="Body" type="MeshInstance" parent="Visual"]
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Hat" type="Spatial" parent="Visual"]
+
+[node name="MeshInstance" type="MeshInstance" parent="Visual/Hat"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.03 )
+mesh = SubResource( 5 )
+material/0 = null
+
+[node name="MeshInstance2" type="MeshInstance" parent="Visual/Hat"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.03 )
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="Face" type="Spatial" parent="Visual"]
+
+[node name="MeshInstance" type="MeshInstance" parent="Visual/Face"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.02 )
+mesh = ExtResource( 5 )
+material/0 = null
+
+[node name="MeshInstance2" type="MeshInstance" parent="Visual/Face"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.02 )
+mesh = ExtResource( 4 )
+material/0 = null
+
+[node name="Cig" type="Spatial" parent="Visual"]
+
+[node name="MeshInstance" type="MeshInstance" parent="Visual/Cig"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.04 )
+mesh = SubResource( 9 )
+material/0 = null
+
+[node name="MeshInstance2" type="MeshInstance" parent="Visual/Cig"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.04 )
+mesh = SubResource( 11 )
+material/0 = null
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
