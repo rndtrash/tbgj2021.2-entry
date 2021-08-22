@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://prefabs/character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/camera_follow.gd" type="Script" id=2]
@@ -11,11 +11,22 @@
 [ext_resource path="res://prefabs/text_bubble.tscn" type="PackedScene" id=9]
 [ext_resource path="res://prefabs/monologue_area.tscn" type="PackedScene" id=10]
 [ext_resource path="res://prefabs/choice_area.tscn" type="PackedScene" id=11]
-[ext_resource path="res://scripts/scene_state.gd" type="Script" id=12]
+[ext_resource path="res://prefabs/ending_area.tscn" type="PackedScene" id=12]
 [ext_resource path="res://prefabs/bydlo.tscn" type="PackedScene" id=13]
 [ext_resource path="res://scripts/BydloEvent.gd" type="Script" id=14]
 [ext_resource path="res://prefabs/alcoholic.tscn" type="PackedScene" id=15]
 [ext_resource path="res://prefabs/garbage.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scripts/AlcoEvent.gd" type="Script" id=17]
+[ext_resource path="res://prefabs/mud.tscn" type="PackedScene" id=18]
+[ext_resource path="res://jungle-day.mp3" type="AudioStream" id=19]
+[ext_resource path="res://scripts/MudEvent.gd" type="Script" id=20]
+[ext_resource path="res://scripts/ObhodEvent.gd" type="Script" id=21]
+[ext_resource path="res://scripts/EndingEvent.gd" type="Script" id=22]
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 1, 1, 0.219822 )
+
+[sub_resource type="BoxShape" id=3]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.457943, 1, 1 )
@@ -23,7 +34,6 @@ extents = Vector3( 0.457943, 1, 1 )
 [node name="MainScene" type="Spatial" groups=[
 "root",
 ]]
-script = ExtResource( 12 )
 
 [node name="Character" parent="." groups=[
 "Player",
@@ -128,6 +138,21 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.57219, 0.382695, -1.13492 )
 [node name="Grass23" parent="Scenery" instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.56186, 0.382695, -1.13492 )
 
+[node name="Grass24" parent="Scenery" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 33.8686, 0.382695, -1.13492 )
+
+[node name="Grass25" parent="Scenery" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 35.1133, 0.382695, -1.13492 )
+
+[node name="Grass26" parent="Scenery" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 36.0521, 0.382695, -1.13492 )
+
+[node name="Grass27" parent="Scenery" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 35.5518, 0.382695, -1.58028 )
+
+[node name="Grass28" parent="Scenery" instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 34.4924, 0.382695, -1.58028 )
+
 [node name="Flowers" parent="Scenery" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.290632, 0.364548, 0.822587 )
 
@@ -176,7 +201,38 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 21.9463, 0.19113, -0.545007 )
 [node name="Garbage3" parent="Scenery" instance=ExtResource( 16 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 23.8612, 0.19113, 0.583564 )
 
+[node name="Mud" parent="Scenery" instance=ExtResource( 18 )]
+transform = Transform( 2, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 33.0979, 0, 0 )
+
+[node name="RoadBlock" type="KinematicBody" parent="Scenery"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 26.661, 0, -1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Scenery/RoadBlock"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
+shape = SubResource( 2 )
+
+[node name="RoadBlock2" type="KinematicBody" parent="Scenery"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 34.2562, 0, -1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Scenery/RoadBlock2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
+shape = SubResource( 2 )
+
 [node name="Interactive" type="Spatial" parent="."]
+
+[node name="EndingAreaRight" parent="Interactive" instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 53.6303, 5.85084, 0 )
+
+[node name="EndingEvent" type="Area" parent="Interactive"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 49.1456, 0.990373, 0 )
+script = ExtResource( 22 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Interactive/EndingEvent"]
+shape = SubResource( 3 )
+
+[node name="EndingArea" parent="Interactive" instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -19.197, 0.925444, 0 )
+text = "ИСТИННАЯ"
 
 [node name="ChoiceArea" parent="Interactive" instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.70912, 1, 0 )
@@ -195,7 +251,7 @@ text = "я - зло"
 
 [node name="MonologueArea4" parent="Interactive" instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -13.0199, 1, 0 )
-text = "а впрочем, в пизду это приключение!"
+text = "а впрочем, в пизду это приключение"
 
 [node name="MonologueArea5" parent="Interactive" instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -16.5655, 1, 0 )
@@ -217,6 +273,13 @@ text = "мне срочно нужно сделать что-то злое"
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 7.84703, 1, 0 )
 text = "как же я хорош"
 
+[node name="ObhodEvent" type="Spatial" parent="Interactive"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 32.9232, 1, -0.678041 )
+script = ExtResource( 21 )
+
+[node name="MonologueAreaKickedSign3" parent="Interactive/ObhodEvent" instance=ExtResource( 10 )]
+text = "ну пиздец"
+
 [node name="MonologueAreaKickedSign2" parent="Interactive" instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.81448, 1, 0 )
 text = "всмысле плох"
@@ -234,6 +297,18 @@ question_panel_scene = "res://prefabs/question_panel_twoopts.tscn"
 text = "ты упал в яму. в яме пирожок и хуй. что съешь, что в жопу засунешь?"
 unlock_after_answer = false
 
+[node name="AlcoEvent" type="Area" parent="Interactive"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 21.4471, 0.725135, 0 )
+script = ExtResource( 17 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Interactive/AlcoEvent"]
+shape = SubResource( 1 )
+
+[node name="ChoiceAreaKickAlco" parent="Interactive/AlcoEvent" instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.433366, 3.02107, 0 )
+text = "ударить алкаша или оставить в покое?"
+unlock_after_answer = false
+
 [node name="Bydlo" parent="Interactive" instance=ExtResource( 13 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7121, 0.527616, 0 )
 dialog_box_path = NodePath("../../TextBubbleBydlo")
@@ -241,6 +316,14 @@ dialog_box_path = NodePath("../../TextBubbleBydlo")
 [node name="Alcoholic" parent="Interactive" instance=ExtResource( 15 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 22.5363, 0.53015, 0 )
 dialog_box_path = NodePath("../../TextBubbleAlcoholic")
+
+[node name="MudEvent" type="Spatial" parent="Interactive"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 28.3433, 0.729404, 0 )
+script = ExtResource( 20 )
+
+[node name="ChoiceArea2" parent="Interactive/MudEvent" instance=ExtResource( 11 )]
+question_panel_scene = "res://prefabs/question_panel_twoopts.tscn"
+text = "обойти лужу?"
 
 [node name="TextBubble" parent="." instance=ExtResource( 9 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.46173, 1.66211, 0 )
@@ -254,8 +337,20 @@ follow_path = NodePath("../Interactive/Bydlo")
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.46173, 1.66211, 0 )
 follow_path = NodePath("../Interactive/Alcoholic")
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 19 )
+volume_db = -10.0
+autoplay = true
+
+[connection signal="body_entered" from="Interactive/EndingEvent" to="Interactive/EndingEvent" method="_on_EndingEvent_body_entered"]
 [connection signal="bad" from="Interactive/ChoiceArea" to="Interactive/SignEvent" method="kick_and_say"]
 [connection signal="good" from="Interactive/ChoiceArea" to="Interactive/SignEvent" method="ignore_and_say"]
+[connection signal="body_entered" from="Interactive/ObhodEvent/MonologueAreaKickedSign3" to="Interactive/ObhodEvent" method="_on_MonologueAreaKickedSign3_body_entered"]
 [connection signal="body_entered" from="Interactive/BydloEvent" to="Interactive/BydloEvent" method="_on_BydloEvent_body_entered"]
 [connection signal="first" from="Interactive/BydloEvent/ChoiceAreaZadacha" to="Interactive/BydloEvent" method="_on_ChoiceAreaZadacha_first"]
 [connection signal="second" from="Interactive/BydloEvent/ChoiceAreaZadacha" to="Interactive/BydloEvent" method="_on_ChoiceAreaZadacha_second"]
+[connection signal="body_entered" from="Interactive/AlcoEvent" to="Interactive/AlcoEvent" method="_on_BydloEvent_body_entered"]
+[connection signal="bad" from="Interactive/AlcoEvent/ChoiceAreaKickAlco" to="Interactive/AlcoEvent" method="_on_ChoiceAreaKickAlco_bad"]
+[connection signal="good" from="Interactive/AlcoEvent/ChoiceAreaKickAlco" to="Interactive/AlcoEvent" method="_on_ChoiceAreaKickAlco_good"]
+[connection signal="first" from="Interactive/MudEvent/ChoiceArea2" to="Interactive/MudEvent" method="_on_ChoiceArea2_first"]
+[connection signal="second" from="Interactive/MudEvent/ChoiceArea2" to="Interactive/MudEvent" method="_on_ChoiceArea2_second"]

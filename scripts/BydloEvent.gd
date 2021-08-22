@@ -17,7 +17,7 @@ func _on_BydloEvent_body_entered(body):
 	yield(get_tree().create_timer(2.0), "timeout")
 	player.dialog_box.show_text('хто, я?)')
 	yield(get_tree().create_timer(2.0), "timeout")
-	if not global_state.ignored_sign:
+	if not $"/root/global".ignored_sign:
 		bydlo.dialog_box.show_text('хорошо табличку пнул')
 		yield(get_tree().create_timer(2.0), "timeout")
 		player.dialog_box.show_text('ну спасибо')
